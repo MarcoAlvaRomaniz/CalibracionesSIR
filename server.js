@@ -10,6 +10,19 @@ const { send } = require('process');
 const app = express();
 const port = process.env.PORT || 3000;
 
+
+const server = require('http').Server(app);
+//instalacion de cors
+const cors = require('cors');
+const { logErrors, errorHandler } = require('./middleware/error.handler')
+
+app.use(cors());
+app.use(express.json());
+routerAPI(app);
+//declaracion de middlewares
+app.use(logErrors);
+app.use(errorHandler);
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
